@@ -10,6 +10,7 @@ import pytesseract as pyt
 import numpy as np
 from langchain.messages import SystemMessage, HumanMessage
 from langchain.agents import create_agent
+from PIL import Image
 import tempfile
 
 # =========================FRONTEND==================
@@ -88,8 +89,6 @@ def prompt_reader():
   with open('prompt.txt','r') as f:
     prompt = f.read()
   return prompt
-
-
 
 prompt = """I want complete Professional
 Resume with Dynamic Design using Advanced CSS and JS

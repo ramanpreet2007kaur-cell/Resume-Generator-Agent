@@ -13,6 +13,7 @@ from langchain.agents import create_agent
 from PIL import Image
 import tempfile
 import base64
+st.set_page_config(layout="wide")
 
 # =========================FRONTEND==================
 st.title("AI RESUME MAKER & JOB APPLY AGENT")
@@ -128,12 +129,6 @@ if FILE is not None :
 # Change this when required new resume by user, pass details
 
 user_info = st.text_area("Give your information: ")
-
-if user_photo is not None:
-  # Create a temporary file
-  with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp:
-    tmp.write(user_photo.getvalue())
-    tmp_path = tmp.name
 
 user_query = f"""user details:given below:
 resume info {user_info}

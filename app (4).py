@@ -103,7 +103,7 @@ do not draw or generate any other image tag or placeholder circle yourself"""
 #============================ UPLOAD IMAGE ================================
 #============================= IMAGE UPLOAD ==============================
 final_prompt = prompt + prompt_reader()
-FILE = st.silebarfile_uploader(
+FILE = st.silebar.file_uploader(
   "choose an image file",
   type=["jpg","jpeg","png","webp"]
 )

@@ -119,7 +119,7 @@ if FILE is not None :
     save_path = f"{base_name}.jpg"
 
     image.save(save_path,"JPEG")
-    st.slidebar.sucess(f"🎉 Image Sucessfully saved as '{save_path}'
+    st.slidebar.success(f"🎉 Image Sucessfully saved as '{save_path}'")
 
  except Exception as e:
     st.error(f"Error processing image:{e}")

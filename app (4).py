@@ -24,7 +24,7 @@ if not (GOOGLE_API_KEY) and not (Groq_Api_Key) and not (Travily_Api_Key):
   st.warning("pass api key")
   st.stop()
 else :
-  st.sucess)"API_KEYS_LOADED")
+  st.sucess("API_KEYS_LOADED")
 
 
 # ============= MODEL and AGENT CODE====================

@@ -12,6 +12,7 @@ from langchain.messages import SystemMessage, HumanMessage
 from langchain.agents import create_agent
 from PIL import Image
 import tempfile
+import base64
 
 # =========================FRONTEND==================
 st.title("AI RESUME MAKER & JOB APPLY AGENT")
@@ -90,11 +91,16 @@ def prompt_reader():
     prompt = f.read()
   return prompt
 
-prompt = """I want complete Professional
-Resume with Dynamic Design using Advanced CSS and JS
-and must show user input details
-System instructions: Only Give HTML code as output"""
+prompt = """you are a helpful ai assistant  with a job resume maker , your task is to give html gormat 
+resume ,with a proper designing using recent html js css code , with professional degsine format , user
+will upload data and return html format resume make it diffrent colour scheme andthe resume should 
+project m skill set  also make it look like professional , create side margins table also make the text 
+gradient for heddings like professional summaryIMPORTANT: wherever the profile photo goes in the resume,
+output exactly this tag and nothing else:
+<img src="PROFILE_IMAGE_PLACEHOLDER" style="width:100px;height:100px;border-radius:50%;">
+do not draw or generate any other image tag or placeholder circle yourself"""
 #============================ UPLOAD IMAGE ================================
+#============================= IMAGE UPLOAD ==============================
 final_prompt = prompt + prompt_reader()
 FILE = st.silebarfile_uploader(
   "choose an image file",
@@ -121,8 +127,7 @@ if FILE is not None :
 
 # Change this when required new resume by user, pass details
 
-user_info = st.text_input("Give your information: ")
-user_photo = st.sidebar.file_uploader("Upload pic", type = 'image/jpeg')
+user_info = st.text_area("Give your information: ")
 
 if user_photo is not None:
   # Create a temporary file
@@ -130,18 +135,51 @@ if user_photo is not None:
     tmp.write(user_photo.getvalue())
     tmp_path = tmp.name
 
-user_query = f"""Give Resume for Python Developer.
-    user details : {user_info}
+user_query = f"""user details:given below:
+resume info {user_info}
+DEFAULT IF NOT GIVEN : PYTHON DEVELOPER RESUME"""
+    
     use user profile image from given {tmp_path}"""
 
 final_query = final_prompt + user_query
+
+OPTIONS = ["DELHI","NOIDA","GURGAON/GURUGRAM",
+          'KANPUR','LUCKNOW','BANGLORE','PUNE']
+           
+LOCATION = st.sidebar.multiselect('SELECT LOCATION: ',
+                                    options = OPTIONS )
+
+JOB_PROFILE = ["PYTHON DEVELOPER",'GEN AI',
+                'FULL-STACK DEVELOPER','DATA ANALYST']
+
+PROFILE = st.sidebar.multiselect("SELECT JOB ROLE",
+                options = JOB_PROFILE)
+
+
+job_prompt = f"""Based on {PROFILE} jobs in {LOCATION}, I 
+want latest job news in using tavily, 
+try top 10 search or whatever available
+and give result like naukri theme design with
+job name, job desc, salary,
+apply link and OUTPUT must be In HTML no markdowns"""
 
 if st.button("Generate Resume"):
   with st.spinner("Agent creating Resume..."):
     response = agent.invoke({'messages':[{'role':'user',"content":final_query}]})
     code = response['messages'][-1].content[-1]['text']
-    
-    st.html(code, width="stretch", unsafe_allow_javascript=True)
+
+if FILE is not None :
+    with open(save_path,"rb") as image_file:
+             b64_image=base64.b64encode(img_file.read()).decode()
+    data_url=f"data:image/jpeg;base64,{b64_iamge}"
+    code=code.replace("PROFILE_IMAGE_PLACEHOLDER",data_uri)
+
+    st.html(code,width="stretch", unsafe_allow_jawascript=True)
+#=========================== APPLY LIVE JOBS ===========================
+    st.divider()
+    response = agent.invoke({'messages':[{'role':'user',"content":job_prompt}]})
+    job_code = response['messages'][-1].content[-1]['text']
+    st.html(job_code, width="stretch", unsafe_allow_javascript=True)
 
 
 

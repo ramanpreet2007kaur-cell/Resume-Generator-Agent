@@ -109,14 +109,14 @@ if FILE is not None :
     if image.mode in ("RGBA","P"):
       image = image.convert("RG")
 
-base_name = os.path.splitext(FILE.name)[0]
-save_path = f"{base_name}.jpg"
+    base_name = os.path.splitext(FILE.name)[0]
+    save_path = f"{base_name}.jpg"
 
-image.save(save_path,"JPEG")
-st.slidebar.sucess(f"🎉 Image Sucessfully saved as '{save_path}'
+    image.save(save_path,"JPEG")
+    st.slidebar.sucess(f"🎉 Image Sucessfully saved as '{save_path}'
 
  except Exception as e:
- st.error(f"Error processing image:{e}")
+    st.error(f"Error processing image:{e}")
     
 
 # Change this when required new resume by user, pass details

@@ -132,8 +132,6 @@ user_info = st.text_area("Give your information: ")
 user_query = f"""user details:given below:
 resume info {user_info}
 DEFAULT IF NOT GIVEN : PYTHON DEVELOPER RESUME"""
-    
-    use user profile image from given {tmp_path}"""
 
 final_query = final_prompt + user_query
 

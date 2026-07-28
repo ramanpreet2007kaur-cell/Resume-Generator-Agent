@@ -13,14 +13,18 @@ from langchain.agents import create_agent
 import tempfile
 
 # =========================FRONTEND==================
-st.title("AI RESUME GENERATOR")
+st.title("AI RESUME MAKER & JOB APPLY AGENT")
+st.image("https://chatgpt.com/s/m_6a687f2486008191b9d1691323fddba2")
 
 GOOGLE_API_KEY = st.sidebar.text_input("Google Api Key", type = 'password')
 GROQ_API_KEY = st.sidebar.text_input("GROQ Api Key", type = 'password')
 TAVILY_API_KEY = st.sidebar.text_input("TAVILY Api Key", type = 'password')
 
-if not GOOGLE_API_KEY:
-  st.warning("Provide Google API key")
+if not (GOOGLE_API_KEY) and not (Groq_Api_Key) and not (Travily_Api_Key):
+  st.warning("pass api key")
+  st.stop()
+else :
+  st.sucess)"API_KEYS_LOADED")
 
 
 # ============= MODEL and AGENT CODE====================
@@ -91,10 +95,30 @@ prompt = """I want complete Professional
 Resume with Dynamic Design using Advanced CSS and JS
 and must show user input details
 System instructions: Only Give HTML code as output"""
-
+#============================ UPLOAD IMAGE ================================
 final_prompt = prompt + prompt_reader()
+FILE = st.silebarfile_uploader(
+  "choose an image file",
+  type=["jpg","jpeg","png","webp"]
+)
+if FILE is not None :
+  try:
+    image=Image.open(FILE)
+    st.silebar.image(image,
+                captaim="Uploaded Image",
+                use_contained_width=True)
+    if image.mode in ("RGBA","P"):
+      image = image.convert("RG")
 
-profile_url = "https://s7d1.scene7.com/is/image/wbcollab/India_PM_Narendra_Modi-2?qlt=75&resMode=sharp2"
+base_name = os.path.splitext(FILE.name)[0]
+save_path = f"{base_name}.jpg"
+
+image.save(save_path,"JPEG")
+st.slidebar.sucess(f"🎉 Image Sucessfully saved as '{save_path}'
+
+ except Exception as e:
+ st.error(f"Error processing image:{e}")
+    
 
 # Change this when required new resume by user, pass details
 

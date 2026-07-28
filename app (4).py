@@ -122,13 +122,13 @@ if FILE is not None :
     image.save(save_path,"JPEG")
     st.slidebar.success(f"🎉 Image Sucessfully saved as '{save_path}'")
 
- except Exception as e:
+  except Exception as e:
     st.error(f"Error processing image:{e}")
     
 
 # Change this when required new resume by user, pass details
 
-user_info = st.text_area("Give your information: ")
+ user_info = st.text_area("Give your information: ")
 
 user_query = f"""user details:given below:
 resume info {user_info}

@@ -114,7 +114,7 @@ if FILE is not None :
                 captaim="Uploaded Image",
                 use_contained_width=True)
     if image.mode in ("RGBA","P"):
-      image = image.convert("RG")
+      image = image.convert("RB")
 
     base_name = os.path.splitext(FILE.name)[0]
     save_path = f"{base_name}.jpg"
